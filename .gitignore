@@ -1,5 +1,6 @@
 .vs/
 *.csproj.user
+*.suo
 bin/
 obj/
 Vss2GitSetup*.exe
