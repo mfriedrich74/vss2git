@@ -70,6 +70,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.anyCommentUpDown = new System.Windows.Forms.NumericUpDown();
             this.ignoreErrorsCheckBox = new System.Windows.Forms.CheckBox();
+            this.allowEmptyCommitsCheckBox = new System.Windows.Forms.CheckBox();
             this.vssGroupBox.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.outputGroupBox.SuspendLayout();
@@ -92,7 +93,7 @@
             this.vssGroupBox.Controls.Add(this.vssDirLabel);
             this.vssGroupBox.Location = new System.Drawing.Point(12, 12);
             this.vssGroupBox.Name = "vssGroupBox";
-            this.vssGroupBox.Size = new System.Drawing.Size(646, 126);
+            this.vssGroupBox.Size = new System.Drawing.Size(551, 126);
             this.vssGroupBox.TabIndex = 0;
             this.vssGroupBox.TabStop = false;
             this.vssGroupBox.Text = "VSS Settings";
@@ -114,7 +115,7 @@
             this.encodingComboBox.FormattingEnabled = true;
             this.encodingComboBox.Location = new System.Drawing.Point(94, 97);
             this.encodingComboBox.Name = "encodingComboBox";
-            this.encodingComboBox.Size = new System.Drawing.Size(546, 21);
+            this.encodingComboBox.Size = new System.Drawing.Size(451, 21);
             this.encodingComboBox.TabIndex = 7;
             // 
             // excludeTextBox
@@ -123,7 +124,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.excludeTextBox.Location = new System.Drawing.Point(94, 71);
             this.excludeTextBox.Name = "excludeTextBox";
-            this.excludeTextBox.Size = new System.Drawing.Size(546, 20);
+            this.excludeTextBox.Size = new System.Drawing.Size(451, 20);
             this.excludeTextBox.TabIndex = 5;
             // 
             // excludeLabel
@@ -141,7 +142,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.vssProjectTextBox.Location = new System.Drawing.Point(94, 45);
             this.vssProjectTextBox.Name = "vssProjectTextBox";
-            this.vssProjectTextBox.Size = new System.Drawing.Size(546, 20);
+            this.vssProjectTextBox.Size = new System.Drawing.Size(451, 20);
             this.vssProjectTextBox.TabIndex = 3;
             // 
             // vssDirTextBox
@@ -150,7 +151,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.vssDirTextBox.Location = new System.Drawing.Point(94, 19);
             this.vssDirTextBox.Name = "vssDirTextBox";
-            this.vssDirTextBox.Size = new System.Drawing.Size(546, 20);
+            this.vssDirTextBox.Size = new System.Drawing.Size(451, 20);
             this.vssDirTextBox.TabIndex = 1;
             // 
             // vssProjectLabel
@@ -174,7 +175,7 @@
             // goButton
             // 
             this.goButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.goButton.Location = new System.Drawing.Point(502, 400);
+            this.goButton.Location = new System.Drawing.Point(407, 422);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(75, 23);
             this.goButton.TabIndex = 3;
@@ -194,16 +195,16 @@
             this.revisionLabel,
             this.changeLabel,
             this.timeLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 433);
+            this.statusStrip.Location = new System.Drawing.Point(0, 452);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(670, 22);
+            this.statusStrip.Size = new System.Drawing.Size(575, 22);
             this.statusStrip.TabIndex = 5;
             this.statusStrip.Text = "statusStrip1";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(370, 17);
+            this.statusLabel.Size = new System.Drawing.Size(275, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.Text = "Idle";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -236,6 +237,7 @@
             // 
             this.outputGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputGroupBox.Controls.Add(this.allowEmptyCommitsCheckBox);
             this.outputGroupBox.Controls.Add(this.ignoreErrorsCheckBox);
             this.outputGroupBox.Controls.Add(this.commentTextBox);
             this.outputGroupBox.Controls.Add(this.commentLabel);
@@ -252,7 +254,7 @@
             this.outputGroupBox.Controls.Add(this.logLabel);
             this.outputGroupBox.Location = new System.Drawing.Point(12, 144);
             this.outputGroupBox.Name = "outputGroupBox";
-            this.outputGroupBox.Size = new System.Drawing.Size(646, 169);
+            this.outputGroupBox.Size = new System.Drawing.Size(551, 193);
             this.outputGroupBox.TabIndex = 1;
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "Output Settings";
@@ -263,7 +265,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.commentTextBox.Location = new System.Drawing.Point(94, 123);
             this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(546, 20);
+            this.commentTextBox.Size = new System.Drawing.Size(451, 20);
             this.commentTextBox.TabIndex = 6;
             // 
             // commentLabel
@@ -271,7 +273,7 @@
             this.commentLabel.AutoSize = true;
             this.commentLabel.Location = new System.Drawing.Point(6, 126);
             this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(88, 13);
+            this.commentLabel.Size = new System.Drawing.Size(87, 13);
             this.commentLabel.TabIndex = 8;
             this.commentLabel.Text = "Default comment";
             // 
@@ -315,7 +317,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.domainTextBox.Location = new System.Drawing.Point(94, 45);
             this.domainTextBox.Name = "domainTextBox";
-            this.domainTextBox.Size = new System.Drawing.Size(546, 20);
+            this.domainTextBox.Size = new System.Drawing.Size(451, 20);
             this.domainTextBox.TabIndex = 3;
             // 
             // emailMapFileTextBox
@@ -324,7 +326,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.emailMapFileTextBox.Location = new System.Drawing.Point(94, 71);
             this.emailMapFileTextBox.Name = "emailMapFileTextBox";
-            this.emailMapFileTextBox.Size = new System.Drawing.Size(546, 20);
+            this.emailMapFileTextBox.Size = new System.Drawing.Size(451, 20);
             this.emailMapFileTextBox.TabIndex = 3;
             // 
             // emailMapFileLabel
@@ -351,7 +353,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.outDirTextBox.Location = new System.Drawing.Point(94, 19);
             this.outDirTextBox.Name = "outDirTextBox";
-            this.outDirTextBox.Size = new System.Drawing.Size(546, 20);
+            this.outDirTextBox.Size = new System.Drawing.Size(451, 20);
             this.outDirTextBox.TabIndex = 1;
             // 
             // outDirLabel
@@ -369,7 +371,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.logTextBox.Location = new System.Drawing.Point(94, 97);
             this.logTextBox.Name = "logTextBox";
-            this.logTextBox.Size = new System.Drawing.Size(546, 20);
+            this.logTextBox.Size = new System.Drawing.Size(451, 20);
             this.logTextBox.TabIndex = 5;
             // 
             // logLabel
@@ -385,7 +387,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(583, 400);
+            this.cancelButton.Location = new System.Drawing.Point(488, 422);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 4;
@@ -395,15 +397,17 @@
             // 
             // changesetGroupBox
             // 
+            this.changesetGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.changesetGroupBox.Controls.Add(this.label4);
             this.changesetGroupBox.Controls.Add(this.label3);
             this.changesetGroupBox.Controls.Add(this.sameCommentUpDown);
             this.changesetGroupBox.Controls.Add(this.label2);
             this.changesetGroupBox.Controls.Add(this.label1);
             this.changesetGroupBox.Controls.Add(this.anyCommentUpDown);
-            this.changesetGroupBox.Location = new System.Drawing.Point(12, 319);
+            this.changesetGroupBox.Location = new System.Drawing.Point(12, 343);
             this.changesetGroupBox.Name = "changesetGroupBox";
-            this.changesetGroupBox.Size = new System.Drawing.Size(560, 75);
+            this.changesetGroupBox.Size = new System.Drawing.Size(551, 75);
             this.changesetGroupBox.TabIndex = 2;
             this.changesetGroupBox.TabStop = false;
             this.changesetGroupBox.Text = "Changeset Building";
@@ -471,7 +475,7 @@
             // ignoreErrorsCheckBox
             //
             this.ignoreErrorsCheckBox.AutoSize = true;
-            this.ignoreErrorsCheckBox.Location = new System.Drawing.Point(542, 149);
+            this.ignoreErrorsCheckBox.Location = new System.Drawing.Point(9, 168);
             this.ignoreErrorsCheckBox.Name = "ignoreErrorsCheckBox";
             this.ignoreErrorsCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ignoreErrorsCheckBox.Size = new System.Drawing.Size(101, 17);
@@ -479,13 +483,26 @@
             this.ignoreErrorsCheckBox.Text = "Ignore Git errors";
             this.ignoreErrorsCheckBox.UseVisualStyleBackColor = true;
             // 
+            // allowEmptyCommitsCheckBox
+            // 
+            this.allowEmptyCommitsCheckBox.AutoSize = true;
+            this.allowEmptyCommitsCheckBox.Checked = true;
+            this.allowEmptyCommitsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.allowEmptyCommitsCheckBox.Location = new System.Drawing.Point(116, 168);
+            this.allowEmptyCommitsCheckBox.Name = "allowEmptyCommitsCheckBox";
+            this.allowEmptyCommitsCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.allowEmptyCommitsCheckBox.Size = new System.Drawing.Size(168, 17);
+            this.allowEmptyCommitsCheckBox.TabIndex = 8;
+            this.allowEmptyCommitsCheckBox.Text = "Allow empty commit messages";
+            this.allowEmptyCommitsCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.goButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(670, 455);
+            this.ClientSize = new System.Drawing.Size(575, 474);
             this.Controls.Add(this.changesetGroupBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.outputGroupBox);
@@ -556,6 +573,7 @@
         private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.CheckBox collapsePathCheckBox;
+        private System.Windows.Forms.CheckBox allowEmptyCommitsCheckBox;
     }
 }
 

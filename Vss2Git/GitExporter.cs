@@ -52,6 +52,13 @@ namespace Hpdi.Vss2Git
         private Dictionary<string, string> nameMap = new Dictionary<string, string>();
         private Dictionary<string, string> emailMap = new Dictionary<string, string>();
 
+        private bool allowEmptyCommits = true;
+        public bool AllowEmptyCommits
+        {
+            get { return allowEmptyCommits; }
+            set { allowEmptyCommits = value; }
+        }
+
         private string emailDomain = "localhost";
         public string EmailDomain
         {
@@ -219,10 +226,13 @@ namespace Hpdi.Vss2Git
                     // commit changes
                     if (needCommit)
                     {
-                        LogStatus(work, "Committing " + changesetDesc);
-                        if (CommitChangeset(git, changeset))
+                        if (allowEmptyCommits || !string.IsNullOrEmpty(changeset.Comment))
                         {
-                            ++commitCount;
+                            LogStatus(work, "Committing " + changesetDesc);
+                            if (CommitChangeset(git, changeset))
+                            {
+                                ++commitCount;
+                            }
                         }
                     }
 

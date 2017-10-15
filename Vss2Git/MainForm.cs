@@ -128,6 +128,7 @@ namespace Hpdi.Vss2Git
                         gitExporter.CommitEncoding = encoding;
                     }
                     gitExporter.IgnoreErrors = ignoreErrorsCheckBox.Checked;
+                    gitExporter.AllowEmptyCommits = allowEmptyCommitsCheckBox.Checked;
                     gitExporter.CollapsePath = collapsePathCheckBox.Checked;
                     gitExporter.ExportToGit(outDirTextBox.Text);
                 }
