@@ -20,6 +20,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Hpdi.VssLogicalLib;
@@ -40,6 +41,16 @@ namespace Hpdi.Vss2Git
         private bool ignoreErrors = false;
         private string defaultComment = "";
         private bool collapsePath = false;
+
+        private string emailMapFile = "emailmap.xml";
+        public string EmailMapFile
+        {
+            get { return emailMapFile; }
+            set { emailMapFile = value; }
+        }
+
+        private Dictionary<string, string> nameMap = new Dictionary<string, string>();
+        private Dictionary<string, string> emailMap = new Dictionary<string, string>();
 
         private string emailDomain = "localhost";
         public string EmailDomain
@@ -89,6 +100,24 @@ namespace Hpdi.Vss2Git
             this.changesetBuilder = changesetBuilder;
         }
 
+        public bool ReadEmailMap()
+        {
+            try
+            {
+                XDocument xdoc = XDocument.Load(emailMapFile);
+                foreach (var map in xdoc.Root.Elements("map"))
+                {
+                    emailMap.Add(map.Attribute("vssid").Value.ToLower(), map.Attribute("email").Value);
+                    nameMap.Add(map.Attribute("vssid").Value.ToLower(), map.Attribute("name").Value);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void ExportToGit(string repoPath)
         {
             workQueue.AddLast(delegate(object work)
@@ -102,6 +131,19 @@ namespace Hpdi.Vss2Git
                 if (!Directory.Exists(repoPath))
                 {
                     Directory.CreateDirectory(repoPath);
+                }
+
+                while(!ReadEmailMap())
+                {
+                    var button = MessageBox.Show("Email map file not found. ",
+                        "Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                    if (button == DialogResult.Abort)
+                    {
+                        workQueue.Abort();
+                        return;
+                    }
+                    if (button == DialogResult.Ignore)
+                        break;
                 }
 
                 var git = new GitWrapper(repoPath, logger);
@@ -226,7 +268,7 @@ namespace Hpdi.Vss2Git
                                 if (AbortRetryIgnore(
                                     delegate
                                     {
-                                        git.Tag(tagName, label.User, GetEmail(label.User),
+                                        git.Tag(tagName, GetName(label.User), GetEmail(label.User),
                                             tagComment, label.DateTime);
                                     }))
                                 {
@@ -586,7 +628,7 @@ namespace Hpdi.Vss2Git
             AbortRetryIgnore(delegate
             {
                 result = git.AddAll() &&
-                    git.Commit(changeset.User, GetEmail(changeset.User),
+                    git.Commit(GetName(changeset.User), GetEmail(changeset.User),
                     changeset.Comment ?? DefaultComment, changeset.DateTime);
             });
             return result;
@@ -643,10 +685,28 @@ namespace Hpdi.Vss2Git
             return false;
         }
 
+        private string GetName(string user)
+        {
+            // check user-defined mapping of user names to email addresses
+            string userid = user.ToLower();
+            string name = "";
+            nameMap.TryGetValue(userid, out name);
+            if (string.IsNullOrEmpty(name))
+                name = user;
+            return name;
+        }
+
         private string GetEmail(string user)
         {
-            // TODO: user-defined mapping of user names to email addresses
-            return user.ToLower().Replace(' ', '.') + "@" + emailDomain;
+            // check user-defined mapping of user names to email addresses
+            string userid = user.ToLower();
+            string email = "";
+            emailMap.TryGetValue(userid, out email);
+            if (string.IsNullOrEmpty(email))
+                email = userid.Replace(' ', '.');
+            if (!email.Contains("@"))
+                email += "@" + emailDomain;
+            return email;
         }
 
         private string GetTagFromLabel(string label)
